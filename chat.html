@@ -1,0 +1,24 @@
+<html>
+    <body>
+        <input type="text" id="chat"></input>
+        <input type="submit" id="submit"></input>
+        <br>
+        <div id="transcript"></div>
+        <script>
+            tr = document.getElementById("transcript")
+
+            ws = new WebSocket("ws://flooshie.art:7890/ws/{name}")
+
+            ws.onmessage = (message) =>  {
+                elem = document.createElement("p")
+                elem.innerHTML = message.data
+                tr.insertBefore(elem, tr.firstChild)
+            }
+            document.getElementById("submit").onclick = () => {
+                chat = document.getElementById("chat")
+                ws.send(chat.value)
+                chat.value = ""
+            }
+        </script>
+        </body>
+</html>
